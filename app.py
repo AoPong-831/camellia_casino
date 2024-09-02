@@ -6,7 +6,7 @@ app = Flask(__name__)
 def hello_world():
     if request.method == "POST":
         id = request.form.get("id")#idを受け取る
-        if id == "aaa":
+        if id == "aaa":#aaaだったらログイン成功
             return render_template("top2.html")
     return render_template("top.html")
 
