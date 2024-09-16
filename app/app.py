@@ -7,7 +7,7 @@ from app import key#ログイン用(session管理に使う)のシークレット
 app = Flask(__name__)
 app.secret_key = key.SECRET_KEY#シークレットキー
 
-
+#topページ
 @app.route("/")
 @app.route("/index",methods=["get","post"])
 def index():
@@ -15,10 +15,10 @@ def index():
         name = session["user_name"]
         chip_list = Chip_database.query.all()#database読み込み
         return render_template("top.html",chip_list=chip_list)
-    else:
+    else:#ログインしていない場合
         return redirect(url_for("login"))
 
-#ログインページ
+#ログイン処理・ログインページ
 @app.route("/login",methods=["get","post"])
 def login():
     if request.method == "POST":
@@ -37,6 +37,11 @@ def login():
         status = request.args.get("status")#エラーメッセージを受け取る
         if status == None:status = ""#status空白化
         return render_template("login.html",status=status)
+
+@app.route("/logout",methods=["post"])
+def logout():
+    session.pop("user_name", None)
+    return redirect(url_for("login"))#ログインページにリダイレクト
 
 @app.route("/add",methods=["post"])
 def add():
