@@ -7,13 +7,15 @@ class Chip_database(Base):
     __tablename__ = "chip_database"
     id = Column(Integer, primary_key=True)
     name = Column(String(16), unique=True)
+    birth = Column(String(4))
     chip = Column(Integer)
     money = Column(Integer)
     date = Column(DateTime, default=datetime.now())
 
-    def __init__(self, name=None, chip=None, money=None, date=None):
+    def __init__(self, name=None, birth=None, chip=0, money=0, date=None):
         self.name = name
         self.chip = chip
+        self.birth = birth
         self.money = money
         self.date = date
 
