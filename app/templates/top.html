@@ -9,13 +9,6 @@
 
 <br>
 
-<!--レコード追加-->
-<form action="/add" method="post">
-    <input type="text" name="name" placeholder="name" required>
-    <input type="text" name="birth" placeholder="birth" required>
-    <input type="submit" value="add">
-</form>
-
 <!---database表示-->
 {% for chip in chip_list %}
     <p>{{chip.name}}:{{chip.birth}}:{{chip.chip}}:{{chip.money}}   [{{chip.date}}]</p>

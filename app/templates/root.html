@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}TOPページ{% endblock %}
+
+{% block content %}
+<h1>Root View</h1>
+<form action="/logout" method="post">
+    <input type="submit" name="submit" value="logout">
+</form>
+
+<br>
+
+<!--レコード追加-->
+<form action="/add" method="post">
+    <input type="text" name="name" placeholder="name" required>
+    <input type="text" name="birth" placeholder="birth" required>
+    <input type="submit" value="add">
+</form>
+
+<!---database表示-->
+<!---update処理-->
+<form action="/update" method="post" id="update">
+    <input type="text" name="name" placeholder="name" required>
+    <input type="text" name="birth" placeholder="birth" required>
+    <input type="submit" value="update">
+</form>
+<!---delete処理-->
+<form action="/delete" method="post" id="delete">
+    <input type="submit" value="Delete Selected All chip">
+</form>
+<!---一覧表示-->
+{% for chip in chip_list %}
+    <div>
+        <input type="radio" name="update" form="update" value="{{chip.id}}">
+        <input type="checkbox" name="delete" form="delete" value="{{chip.id}}">
+        {{chip.name}}:{{chip.birth}}:{{chip.chip}}:{{chip.money}}   [{{chip.date}}] 
+    </div>
+{% endfor %}
+</form>
+{% endblock %}
