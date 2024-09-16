@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}TOPページ{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<p>{{status}}</p>
+<form action="/login" method="post">
+    <input type="text" name="name" placeholder="name" required><br>
+    <input type="text" name="birth" placeholder="birth" required><br>
+    <input type="submit" value="login">
+</form>
+{% endblock %}
