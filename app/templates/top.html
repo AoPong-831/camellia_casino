@@ -3,14 +3,16 @@
 
 {% block content %}
 <h1>Hello World</h1>
-<form method="POST">
+<form action="/" method="POST">
     <h3>id</h3>
     <input type="text" name="id">
     <input type="submit" name="submit" value="ログイン">
 
-    <!---database表示-->
-    {% for chip in chip_list%}
-    <p>{{chip.name}}:{{chip.chip}}</p>
-    {% endfor %}
+
+
+<!---database表示-->
+{% for chip in chip_list%}
+<p>{{chip.name}}:{{chip.chip}}:{{chip.money}}[{{chip.date}}]</p>
+{% endfor %}
 </form>
 {% endblock %}
