@@ -3,9 +3,24 @@ from models.models import Chip_database#database読み込み
 from models.database import db_session#inset処理用
 from datetime import datetime#レコードのタイムスタンプ用
 from app import key#ログイン用(session管理に使う)のシークレットキー
+import os
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.secret_key = key.SECRET_KEY#シークレットキー
+
+db_uri = "sqlite:///" + os.path.abspath(os.path.join(app.root_path, '../models', 'chip.db')) # 追加(自分で一部変更した{os.path.abspath})
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri # 追加
+db = SQLAlchemy(app) # 追加
+
+class Chip_database(db.Model): # 追加
+    __tablename__ = "chip_database" # 追加
+    id = db.Column(db.Integer, primary_key=True) # 追加
+    name = db.Column(db.String(), nullable=False) # 追加
+    birth = db.Column(db.String(), nullable=False) # 追加
+    chip = db.Column(db.Integer, nullable=False) # 追加
+    money = db.Column(db.Integer, nullable=False) # 追加
+    date = db.Column(db.String(), nullable=False) # 追加
 
 #topページ
 @app.route("/")
@@ -64,12 +79,12 @@ def logout():
 #Create(試作)
 @app.route("/add",methods=["post"])
 def add():
-    name = request.form["name"]
-    birth = request.form["birth"]
-    chip = 0
-    money = 0
-    content = Chip_database(name,birth,chip,money,datetime.now())#追加するレコード作成
-    db_session.add(content)#以下terminalと同様の処理
+    chip_db = Chip_database()#dbのインスタンスを作る(sqlalchemy)
+    chip_db.name = request.form["name"]
+    chip_db.birth = request.form["birth"]
+    chip_db.chip = 0
+    chip_db.money = 0
+    db_session.add(chip_db)#以下terminalと同様の処理
     db_session.commit()
     return redirect(url_for("index"))
 
