@@ -84,17 +84,18 @@ def add():
     chip_db.birth = request.form["birth"]
     chip_db.chip = 0
     chip_db.money = 0
-    db_session.add(chip_db)#以下terminalと同様の処理
-    db_session.commit()
+    db.session.add(chip_db)#以下terminalと同様の処理
+    db.session.commit()
     return redirect(url_for("index"))
 
 #Update(rootのみ)
 @app.route("/update",methods=["post"])
 def update():
-    content = Chip_database.query.filter_by(id=request.form["update"]).first()
-    content.name = request.form["name"]
-    content.birth = request.form["birth"]
-    db_session.commit()
+    content = Chip_database.query.filter_by(name=request.form.get("name")).first()#id=request.form.get("update") >> name=request.form.get("name")に変更したら行けた。nameはquniqueだから良いのでは？？
+    if content:#該当レコードがある場合
+        content.name = request.form["name"]
+        content.birth = request.form["birth"]
+        db.session.commit()
     return root()
 
 #Delete(rootのみ)
@@ -103,7 +104,8 @@ def delete():
     id_list = request.form.getlist("delete")
     for id in id_list:
         content = Chip_database.query.filter_by(id=id).first()
-        db_session.delete(content)
+        if content:#該当レコードがあれば
+            db_session.delete(content)
     db_session.commit()
     return root()
 
