@@ -105,8 +105,8 @@ def delete():
     for id in id_list:
         content = Chip_database.query.filter_by(id=id).first()
         if content:#該当レコードがあれば
-            db_session.delete(content)
-    db_session.commit()
+            db.session.delete(content)
+    db.session.commit()
     return root()
 
 if __name__ == "__main__":
